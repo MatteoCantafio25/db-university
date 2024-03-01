@@ -59,6 +59,10 @@ HAVING `number_of_teachers` > 1;
 
 -- 3. Calcolare la media dei voti di ogni appello d'esame
 
+SELECT ROUND(AVG(`vote`), 2) AS `media_voto`, `exam_id`
+FROM `exam_student`
+-- WHERE `vote` >= 18 (nel caso volessimo fare la media solo dei voti con cui l'esame risulta passato)
+GROUP BY `exam_id`;
 
 -- 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
 
