@@ -1,4 +1,4 @@
--- QUERY CON SELECT
+-- QUERY WITH SELECT
 
 -- 1. Selezionare tutti gli studenti nati nel 1990 (160)
 SELECT * 
@@ -37,3 +37,6 @@ SELECT COUNT(`id`) AS `total_departments`
 FROM `departments`;
 
 -- 8. Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
+SELECT `name`, `surname`, `phone`
+FROM `teachers`
+WHERE `phone` IS NULL;
