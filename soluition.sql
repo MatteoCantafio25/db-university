@@ -78,19 +78,17 @@ SELECT `students`.`id` AS `id_studente`, `students`.`name` AS `Nome`, `students`
 FROM `students`
 JOIN `degrees`
 ON `degrees`.`id` = `students`.`degree_id`
-JOIN `departments` 
-ON `departments`.`id` = `degrees`.`department_id`
-WHERE `students`.`degree_id` = 53;
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
 
 -- 2. Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
 SELECT `departments`.`name` AS `Nome Dipartimento`, `degrees`.`name` AS `Nome Corso`
 FROM `degrees`
 JOIN `departments`
-ON `departments`. `id` = `department_id`
+ON `departments`. `id` = `degrees`.`department_id`
 WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
 
 -- 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
-SELECT `teachers`. `name` AS `Nome Insegnante`, `teachers`. `surname` AS `Cognome Insegnante`, `degrees`.`name` AS `Nome Corso`
+SELECT `teachers`.`id` , `teachers`. `name` AS `Nome Insegnante`, `teachers`. `surname` AS `Cognome Insegnante`, `degrees`.`name` AS `Nome Corso`
 FROM `teachers`
 JOIN `course_teacher`
 ON `teachers`.`id` = `course_teacher`.`teacher_id`
@@ -98,7 +96,8 @@ JOIN `courses`
 ON `courses`.`id` = `course_teacher`.`course_id`
 JOIN `degrees`
 ON `degrees`.`id` = `courses`.`degree_id`
-WHERE `course_teacher`.`teacher_id` = 44;
+WHERE `teachers`. `name` = 'Fulvio'
+AND `teachers`. `surname` = 'Amato'
 
 -- 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
 SELECT DISTINCT `students`.`id` AS `Id Studente`, `students`.`surname` AS `Cognome`, `students`.`name` AS `Nome`, `departments`.`name` AS `Dipartimento`, `degrees`.`name` AS `Nome Corso`, `courses`.`name` AS `Materia`,`teachers`. `name` AS `Nome Insegnante`, `teachers`. `surname` AS `Cognome Insegnante`, `exam_student`.`vote` AS `Voto`
@@ -121,8 +120,8 @@ ORDER BY `Cognome`,`Nome`;
 
 -- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
 SELECT `degrees`.`name` AS `Corso`, `courses`. `name` AS `Materie`, `teachers`. `name` AS `Nome Insegnante`, `teachers`. `surname` AS `Cognome Insegnante`
-FROM `courses`
-JOIN `degrees`
+FROM `degrees`
+JOIN `courses`
 ON `degrees`.`id` = `courses`.`degree_id`
 JOIN `course_teacher`
 ON `courses`.`id` = `course_teacher`.`course_id`
